@@ -1,28 +1,29 @@
 import { useForm } from "react-hook-form";
 import axiosClient from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Student() {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
-
     const onSubmit = async (values) => {
         try {
-            // Fetch CSRF token
-            await axiosClient.get("/sanctum/csrf-cookie");
-
             // Login request
+            await axiosClient.get("/sanctum/csrf-cookie");
             const response = await axiosClient.post("/login", {
                 email: values.email,
                 password: values.password,
             });
-
-            console.log("User logged in successfully", response.data);
+            if (response.status == 200) {
+                navigate("/student/dashboard");
+            }
+            console.log("User logged in successfully", response.status);
             // Handle successful login
         } catch (error) {
-            console.error("Error occurred during login", error);
+            console.error("Error occurred during login");
             // Handle login error
         }
     };
@@ -70,10 +71,10 @@ export default function Student() {
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     {...register("password", {
                         required: "Password is required",
-                        minLength: {
-                            value: 6,
-                            message: "Password must be at least 6 characters",
-                        },
+                        // minLength: {
+                        //     value: 6,
+                        //     message: "Password must be at least 6 characters",
+                        // },
                     })}
                 />
                 {errors.password && (
