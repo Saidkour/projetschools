@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import axiosClient from "../api/axios";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function Student() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -17,9 +17,6 @@ export default function Student() {
                 email: values.email,
                 password: values.password,
             });
-            if (response.status == 200) {
-                navigate("/student/dashboard");
-            }
             console.log("User logged in successfully", response.status);
             // Handle successful login
         } catch (error) {
