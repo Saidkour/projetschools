@@ -22,6 +22,7 @@ export default function Student() {
         } catch (error) {
             console.error("Error occurred during login");
             // Handle login error
+            
         }
     };
 
@@ -68,10 +69,6 @@ export default function Student() {
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     {...register("password", {
                         required: "Password is required",
-                        // minLength: {
-                        //     value: 6,
-                        //     message: "Password must be at least 6 characters",
-                        // },
                     })}
                 />
                 {errors.password && (
