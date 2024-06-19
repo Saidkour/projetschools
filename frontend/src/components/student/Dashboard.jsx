@@ -73,7 +73,7 @@ const Sidebar = ({ open, setOpen }) => (
       {Menus.map((menu, index) => (
         <li key={index} className={`px-6 py-2 flex items-center ${menu.gap ? 'mt-8' : 'mt-2'} text-gray-700 hover:text-gray-900`}>
           <span className="text-2xl mr-2">{menu.icon}</span>
-          {open && <span>{menu.title}</span>}
+          {open && <span> {menu.title}</span>}
         </li>
       ))}
     </ul>

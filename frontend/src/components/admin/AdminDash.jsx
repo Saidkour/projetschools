@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
-    FiGrid,
     FiInbox,
     FiUser,
-    FiCalendar,
     FiSearch,
-    FiBarChart2,
-    FiFile,
     FiSettings,
 } from "react-icons/fi";
-import { BiDetail, BiAlignLeft, BiAlignRight } from "react-icons/bi";
+import {  BiAlignLeft, BiAlignRight } from "react-icons/bi";
 import { PiStudentBold } from "react-icons/pi";
+import { IoSchoolSharp } from "react-icons/io5";
+import { MdOutlineHome } from "react-icons/md";
+
 // import { Bar, Line } from "react-chartjs-2";
 import {
     Chart as ChartJS,
@@ -40,7 +39,7 @@ ChartJS.register(
 
 const Navbar = ({ open, setOpen }) => (
     <nav
-        className={`bg-gray-400 shadow fixed top-0 left-0 right-0 transition-all duration-300 ${
+        className={`bg-gray-100 shadow fixed top-0 left-0 right-0 transition-all duration-300 ${
             open ? "ml-64" : "ml-20"
         }`}
     >
@@ -60,8 +59,18 @@ const Navbar = ({ open, setOpen }) => (
                         </span>
                     )}
                 </button>
-            </div>
-            <div className="flex items-center">
+                <div className="relative ml-4">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <FiSearch className="text-gray-400" />
+                    </div>
+                    <input
+                        type="text"
+                        className="pl-10 pr-4 py-2 w-64 rounded-full  bg-gray-200 text-gray-200 placeholder-gray-400  transition"
+                        placeholder="Search..."
+                    />
+                </div>        
+                  </div>
+            <div className="flex items-center pr-8">
                 <a href="#" className="text-gray-700 hover:text-gray-900 mx-4">
                     <FiUser />
                 </a>
@@ -74,9 +83,9 @@ const Navbar = ({ open, setOpen }) => (
 );
 
 const Menus = [
-    { title: "Dashboard", icon: <FiGrid />, to: "/admin/dashboard"},
-    { title: "Inbox", icon: <FiInbox />, to: "/inbox" },
-    { title: "Accounts", icon: <FiUser />, to: "/accounts" },
+    { title: "Dashboard", icon: <MdOutlineHome />      , to: "/admin/dashboard"},
+    { title: "Inbox", icon: <FiInbox />, to: "/admin/dashboard/inbox" },
+    { title: "Accounts", icon: <FiUser />, to: "/admin/dashboard/accounts" },
     // { title: "Notes", icon: <FiCalendar />, to: "/notes" },
     // { title: "Todolist", icon: <BiDetail />, to: "/todolist" },
     // { title: "Search", icon: <FiSearch />, to: "/search" },
@@ -88,19 +97,19 @@ const Menus = [
         to: "/admin/dashboard/student",
     },
     { title: "Professeur", icon: <FiUser />, to: "/admin/dashboard/Professeur" },
-    { title: "Setting", icon: <FiSettings />, to: "/setting", gap: true },
+    { title: "Setting", icon: <FiSettings />, to: "/admin/dashboard/settings", gap: true },
 ];
 
 const Sidebar = ({ open }) => (
     <div
-        className={`bg-gray-400 shadow-md fixed top-0 left-0 h-screen transition-width duration-300 ${
+        className={`bg-gray-100 shadow-md fixed top-0 left-0 h-screen transition-width duration-300 ${
             open ? "w-64" : "w-20"
         }`}
     >
-        <div className="flex items-center p-4">
-            <a href="#" className="text-3xl font-bold ">
+        <div className={`px-6 py-2 flex items-center ${open ? "pb-0":"pb-7"}  bg-blue-500`}>
+            <a href="#" className={` ${open ? "text-xl" : "text-2xl"} font-black text-white `}>
                 <span>
-                    <PiStudentBold />
+                  <IoSchoolSharp />
                 </span>{" "}
                 {open && <span>EDUSYS</span>}{" "}
             </a>
@@ -124,7 +133,7 @@ export default function AdminDash() {
     const [open, setOpen] = useState(true);
     return (
         <>
-            <div className="min-h-screen bg-gray-100 flex">
+            <div className="min-h-screen bg-gray-200 flex">
                 <Navbar open={open} setOpen={setOpen} />
                 <div className="flex">
                     <Sidebar open={open} />

@@ -9,6 +9,9 @@ import Professeur from "./components/admin/Pages/professeur/Professeur.jsx";
 import AllStudent from "./components/admin/Pages/student/AllStudent.jsx";
 import EditStudent from "./components/admin/Pages/student/EditStudent.jsx";
 import AddStudent from "./components/admin/Pages/student/AddStudent.jsx";
+import Inbox from "./components/admin/Pages/Inbox.jsx";
+import Accounts from "./components/admin/Pages/Accounts.jsx";
+import Settings from "./components/admin/Pages/Settings.jsx";
 
 function App() {
     return (
@@ -21,12 +24,15 @@ function App() {
                 {/* <Route path="/student/dashboard" element={<Dashboard />} /> */}
                 <Route path="/Admin/dashboard" element={<AdminDash />}>
                     <Route index element={<DashboardHome />} />
+                    <Route path="/Admin/dashboard/inbox" element={<Inbox />} />
+                    <Route path="/Admin/dashboard/accounts" element={<Accounts />} />
                     <Route path="/Admin/dashboard/student" element={<Student />}>
                         <Route index element={<AllStudent />} />
                         <Route path="/Admin/dashboard/student/edit" element={<EditStudent/>} />
                         <Route path="/Admin/dashboard/student/add" element={<AddStudent/>} />
                     </Route>
                     <Route path="/Admin/dashboard/Professeur" element={<Professeur />} />
+                    <Route path="/Admin/dashboard/Settings" element={<Settings />} />
                 </Route>
             </Routes>
         </BrowserRouter>
