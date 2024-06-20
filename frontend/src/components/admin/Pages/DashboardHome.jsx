@@ -39,7 +39,7 @@ function DashboardHome() {
   };
 
   return (
-    <div className="p-20 pt-8">
+    <div className="">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
         <div className="bg-blue-500 p-6  shadow rounded-lg flex items-center" >
           <div className="text-black bg-gray-200 p-2 rounded-full text-3xl mr-4">

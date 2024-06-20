@@ -18,7 +18,6 @@ class LoginRequest extends FormRequest
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -48,7 +47,6 @@ class LoginRequest extends FormRequest
                 'email' => __('auth.failed'),
             ]);
         }
-
         RateLimiter::clear($this->throttleKey());
     }
 
