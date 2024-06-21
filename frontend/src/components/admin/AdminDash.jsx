@@ -134,15 +134,17 @@ const Sidebar = ({ open }) => (
         </div>
         <ul className="py-4">
             {Menus.map((menu, index) => (
-                <li
+               <Link to={menu.to}>
+               <li
                     key={index}
                     className={`px-6 py-2 flex items-center ${
                         menu.gap ? "mt-8" : "mt-2"
                     } text-gray-700 hover:text-gray-900`}
                 >
                     <span className="text-2xl mr-2">{menu.icon}</span>
-                    {open && <Link to={menu.to}>{menu.title}</Link>}
+                    {open && <span>{menu.title}</span>}
                 </li>
+                </Link>
             ))}
         </ul>
     </div>
@@ -153,7 +155,7 @@ export default function AdminDash() {
         <>
             <div className="min-h-screen bg-gray-100 flex">
                 <Navbar open={open} setOpen={setOpen} />
-                <div className="flex">
+                <div className="w-full">
                     <Sidebar open={open} />
 
                     <div
