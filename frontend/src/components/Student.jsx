@@ -1,13 +1,18 @@
 import { useForm } from "react-hook-form";
 import axiosClient from "../api/axios";
-// import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router";
 export default function Student() {
-    // const navigate = useNavigate();
+    // useEffect(() => {
+    //     if (window.localStorage.getItem("ACCESS_TOKEN")) {
+    //         navigate("/");
+    //     }
+    // });
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        setError,
+        formState: { errors, isSubmitting },
     } = useForm();
     const onSubmit = async (values) => {
         try {
@@ -17,12 +22,31 @@ export default function Student() {
                 email: values.email,
                 password: values.password,
             });
-            console.log("User logged in successfully", response.status);
-            // Handle successful login
-        } catch (error) {
-            console.error("Error occurred during login");
-            // Handle login error
-            
+            console.log(response);
+            if (response.status == 204) {
+                window.localStorage.setItem("ACCESS_TOKEN", "test");
+                navigate("/admin/dashboard");
+            }
+        } catch (res) {
+            if (
+                res.response.data.errors.email &&
+                res.response.data.errors.password
+            ) {
+                setError("email", {
+                    message: res.response.data.errors.email,
+                });
+                setError("password", {
+                    message: res.response.data.errors.password,
+                });
+            } else if (res.response.data.errors.email) {
+                setError("email", {
+                    message: res.response.data.errors.email,
+                });
+            } else if (res.response.data.errors.password) {
+                setError("password", {
+                    message: res.response.data.errors.password,
+                });
+            }
         }
     };
 
@@ -41,6 +65,7 @@ export default function Student() {
                 <input
                     id="email"
                     type="email"
+                    value={"said@example.com"}
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm "
                     {...register("email", {
                         required: "Email is required",
@@ -78,10 +103,25 @@ export default function Student() {
                 )}
             </div>
             <button
+                disabled={isSubmitting}
                 type="submit"
                 className="w-full py-2 px-4 bg-black text-white font-medium rounded-md shadow-sm hover:bg-black"
             >
-                Submit
+                {isSubmitting ? (
+                    <svg
+                        className="m-auto "
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                        fill="#ffffff"
+                        width={20}
+                        height={20}
+                    >
+                        z
+                        <path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z" />
+                    </svg>
+                ) : (
+                    "Submit"
+                )}{" "}
             </button>
         </form>
     );

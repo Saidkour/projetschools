@@ -11,28 +11,57 @@ import AddStudent from "./components/admin/Pages/student/AddStudent.jsx";
 import Inbox from "./components/admin/Pages/Inbox.jsx";
 import Accounts from "./components/admin/Pages/Accounts.jsx";
 import Settings from "./components/admin/Pages/Settings.jsx";
+import { createStore } from "redux";
+import reducer from "./redux/reducer.js";
+import { Provider } from "react-redux";
+import Contact from "./pages/contact.jsx";
 
 function App() {
+    const store = createStore(reducer);
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                </Route>
-                {/*<Route path="/student/dashboard" element={<Dashboard />} />*/}
-                <Route path="/Admin/dashboard" element={<AdminDash />}>
-                    <Route index element={<DashboardHome />} />
-                    <Route path="/Admin/dashboard/inbox" element={<Inbox />} />
-                    <Route path="/Admin/dashboard/accounts" element={<Accounts />} />
-                    <Route path="/Admin/dashboard/student" element={<Student />}/>
-                        <Route path="/Admin/dashboard/student/edit" element={<EditStudent/>} />
-                        <Route path="/Admin/dashboard/student/add" element={<AddStudent/>} />
-                    <Route path="/Admin/dashboard/Professeur" element={<Professeur />} />
-                    <Route path="/Admin/dashboard/Settings" element={<Settings />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <Provider store={store}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Layout />}>
+                        <Route index element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/contact" element={<Contact />} />
+                    </Route>
+                    {/*<Route path="/student/dashboard" element={<Dashboard />} />*/}
+                    <Route path="/Admin/dashboard" element={<AdminDash />}>
+                        <Route index element={<DashboardHome />} />
+                        <Route
+                            path="/Admin/dashboard/inbox"
+                            element={<Inbox />}
+                        />
+                        <Route
+                            path="/Admin/dashboard/accounts"
+                            element={<Accounts />}
+                        />
+                        <Route
+                            path="/Admin/dashboard/student"
+                            element={<Student />}
+                        />
+                        <Route
+                            path="/Admin/dashboard/student/edit"
+                            element={<EditStudent />}
+                        />
+                        <Route
+                            path="/Admin/dashboard/student/add"
+                            element={<AddStudent />}
+                        />
+                        <Route
+                            path="/Admin/dashboard/Professeur"
+                            element={<Professeur />}
+                        />
+                        <Route
+                            path="/Admin/dashboard/Settings"
+                            element={<Settings />}
+                        />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </Provider>
     );
 }
 

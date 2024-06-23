@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { FiInbox, FiUser, FiSearch, FiSettings } from "react-icons/fi";
 import { BiAlignLeft, BiAlignRight } from "react-icons/bi";
 import { PiStudentBold } from "react-icons/pi";
 import { IoSchoolSharp } from "react-icons/io5";
 import { MdOutlineHome } from "react-icons/md";
-
-// import { Bar, Line } from "react-chartjs-2";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -19,7 +17,6 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
-
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -31,8 +28,12 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
-const Navbar = ({ open, setOpen }) => {
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import axiosClient from "../../api/axios";
+const Navbar = () => {
+    const open = useSelector((state) => state.open);
+    const dispatch = useDispatch();
     return (
         <nav
             className={`bg-gray-100 shadow fixed top-0 left-0 right-0 transition-all duration-300 ${
@@ -43,7 +44,7 @@ const Navbar = ({ open, setOpen }) => {
                 <div className="flex items-center">
                     <button
                         className="p-3 text-gray-700 hover:text-gray-900 focus:outline-none"
-                        onClick={() => setOpen(!open)}
+                        onClick={() => dispatch({ type: "TOGGLE_OPEN" })}
                     >
                         {open ? (
                             <span className="text-3xl">
@@ -73,9 +74,9 @@ const Navbar = ({ open, setOpen }) => {
                     >
                         <FiUser />
                     </a>
-                    <a href="#" className="text-gray-700 hover:text-gray-900">
+                    <Link to="#" className="text-gray-700 hover:text-gray-900">
                         Logout
-                    </a>
+                    </Link>
                 </div>
             </div>
         </nav>
@@ -109,52 +110,66 @@ const Menus = [
     },
 ];
 
-const Sidebar = ({ open }) => (
-    <div
-        className={`bg-gray-100 shadow-md fixed top-0 left-0 h-screen transition-width duration-300 ${
-            open ? "w-64" : "w-20"
-        }`}
-    >
+const Sidebar = () => {
+    const open = useSelector((state) => state.open);
+    return (
         <div
-            className={`px-6 py-2 flex items-center ${
-                open ? "pb-0" : "pb-7"
-            }  bg-blue-500`}
+            className={`bg-gray-100 shadow-md fixed top-0 left-0 h-screen transition-width duration-300 ${
+                open ? "w-64" : "w-20"
+            }`}
         >
-            <a
-                href="#"
-                className={` ${
-                    open ? "text-xl" : "text-2xl"
-                } font-black text-white `}
+            <div
+                className={`px-6 py-2 flex items-center ${
+                    open ? "pb-0" : "pb-7"
+                }  bg-blue-500`}
             >
-                <span>
-                    <IoSchoolSharp />
-                </span>{" "}
-                {open && <span>EDUSYS</span>}{" "}
-            </a>
-        </div>
-        <ul className="py-4">
-            {Menus.map((menu, index) => (
-                <li
-                    key={index}
-                    className={`px-6 py-2 flex items-center ${
-                        menu.gap ? "mt-8" : "mt-2"
-                    } text-gray-700 hover:text-gray-900`}
+                <a
+                    href="#"
+                    className={` ${
+                        open ? "text-xl" : "text-2xl"
+                    } font-black text-white `}
                 >
-                    <span className="text-2xl mr-2">{menu.icon}</span>
-                    {open && <Link to={menu.to}>{menu.title}</Link>}
-                </li>
-            ))}
-        </ul>
-    </div>
-);
+                    <span>
+                        <IoSchoolSharp />
+                    </span>{" "}
+                    {open && <span>EDUSYS</span>}{" "}
+                </a>
+            </div>
+            <ul className="py-4">
+                {Menus.map((menu, index) => (
+                    <li
+                        key={index}
+                        className={`px-6 py-2 flex items-center ${
+                            menu.gap ? "mt-8" : "mt-2"
+                        } text-gray-700 hover:text-gray-900`}
+                    >
+                        <span className="text-2xl mr-2">{menu.icon}</span>
+                        {open && <Link to={menu.to}>{menu.title}</Link>}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
 export default function AdminDash() {
-    const [open, setOpen] = useState(true);
+    const open = useSelector((state) => state.open);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!window.localStorage.getItem("ACCESS_TOKEN")) {
+            navigate("/login");
+        }
+        axiosClient.get("api/user").then((res) => {
+            if (res.role == user) {
+                navigate("/student/dashboard");
+            }
+        });
+    }, []);
     return (
         <>
             <div className="min-h-screen bg-gray-100 flex">
-                <Navbar open={open} setOpen={setOpen} />
+                <Navbar />
                 <div className="flex">
-                    <Sidebar open={open} />
+                    <Sidebar />
 
                     <div
                         className={` p-12 pt-20 transition-all  duration-300 ${

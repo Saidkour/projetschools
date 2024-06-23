@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
-import Nav from "./Nav";
+// import Nav from "./Nav";
+import NavBar from "./nav2";
 
 function Layout() {
     return (
         <>
-            <Nav />
-            <main className={"container"}>
+            <NavBar />
+            <main className={""}>
                 <Outlet />
             </main>
         </>
