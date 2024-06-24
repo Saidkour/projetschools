@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Nav() {
     return (
         <header>
-            <div className="items-center justify-between flex bg-gray-800 bg-opacity-90 px-12 py-4 mb-4 mx-auto shadow-2xl">
+            <div className="items-center justify-between flex bg-blue-500 bg-opacity-90 px-12 py-4 mb-4 mx-auto shadow-2xl">
                 <div className="text-2xl text-white font-semibold inline-flex items-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

@@ -5,6 +5,7 @@ import { BiAlignLeft, BiAlignRight } from "react-icons/bi";
 import { PiStudentBold } from "react-icons/pi";
 import { IoSchoolSharp } from "react-icons/io5";
 import { MdOutlineHome } from "react-icons/md";
+import { VscAccount } from "react-icons/vsc";
 
 // import { Bar, Line } from "react-chartjs-2";
 import {
@@ -85,7 +86,7 @@ const Navbar = ({ open, setOpen }) => {
 const Menus = [
     { title: "Dashboard", icon: <MdOutlineHome />, to: "/admin/dashboard" },
     { title: "Inbox", icon: <FiInbox />, to: "/admin/dashboard/inbox" },
-    { title: "Accounts", icon: <FiUser />, to: "/admin/dashboard/accounts" },
+    { title: "Accounts", icon: <VscAccount />      , to: "/admin/dashboard/accounts" },
     // { title: "Notes", icon: <FiCalendar />, to: "/notes" },
     // { title: "Todolist", icon: <BiDetail />, to: "/todolist" },
     // { title: "Search", icon: <FiSearch />, to: "/search" },
