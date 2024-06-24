@@ -13,6 +13,7 @@ import Accounts from "./components/admin/Pages/Accounts.jsx";
 import Settings from "./components/admin/Pages/Settings.jsx";
 import EditProfesseur from "./components/admin/Pages/professeur/EditProfesseur.jsx";
 import AddProfesseur from "./components/admin/Pages/professeur/AddProfesseur.jsx";
+import Contact from "./pages/contact.jsx";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/contact" element={<Contact />} />
                 </Route>
                 {/*<Route path="/student/dashboard" element={<Dashboard />} />*/}
                 <Route path="/Admin/dashboard" element={<AdminDash />}>

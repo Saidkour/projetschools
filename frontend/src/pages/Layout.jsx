@@ -5,7 +5,7 @@ function Layout() {
     return (
         <>
             <Nav />
-            <main className={"container"}>
+            <main className={""}>
                 <Outlet />
             </main>
         </>

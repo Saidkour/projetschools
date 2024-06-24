@@ -11,6 +11,11 @@ export default function Login() {
   } = useForm();
 
   const navigate = useNavigate();
+   useEffect(() => {
+        if (sessionStorage.getItem("ACCESS_TOKEN")) {
+            navigate("/");
+        }
+    });
 
   const onSubmit = async (values) => {
     try {
