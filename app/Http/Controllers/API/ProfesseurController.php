@@ -28,13 +28,23 @@ class ProfesseurController extends Controller
         $professeur = Professeur::create($request->all());
         return response()->json($professeur, 201);
     }
+    public function show($id)
+    {
+        $professeur = Professeur::find($id);
+
+        if (!$professeur) {
+            return response()->json(['message' => 'Student not found'], 404);
+        }
+
+        return response()->json(['professeur' => $professeur]);
+    }
 
     public function update(Request $request, $id)
     {
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:professeurs,email,'.$id,
+            'email' => 'required|string|email|max:255|unique:professeurs,email,' . $id,
             'birthday' => 'required|date',
             'phone' => 'required|string|max:15',
             'specialization' => 'required|string|max:255'

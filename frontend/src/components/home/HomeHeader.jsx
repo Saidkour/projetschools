@@ -9,7 +9,7 @@ function HomeHeader() {
   }
   return (
     <div className='block relative pt-20 '>
-      <div className='absolute top-0 left-0 w-full h-full bg-[url("/header_img.jpg")] opacity-[0.87]  bg-cover bg-center z-[-1]'></div>
+      <div className='absolute top-0 left-0 w-full h-full bg-[url("public/header_img.jpg")] opacity-[0.87]  bg-cover bg-center z-[-1]'></div>
       <div className="absolute bg-black w-full h-full left-0 right-0 bottom-0 opacity-[0.47] bg-cover z-[-1] bg-center top-0"></div>
       <div className="flex m-auto ">
         <div className="container mt-[100px] lg:mt-[150px]  px-10">

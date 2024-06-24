@@ -16,10 +16,32 @@ function EditProfesseur() {
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
+
+        // const getStudent = async () => {
+        //     const token = sessionStorage.getItem("token");
+        //     await axiosClient.get("/sanctum/csrf-cookie");
+        //     try {
+        //         const response = await axiosClient.get(`/api/students/${id}`, {
+        //             headers: { Authorization: `Bearer ${token}` }
+        //         });
+        //         console.log(response);
+        //         setFormData(response.data.student); 
+        //     } catch (error) {
+        //         console.error("There was an error fetching the student!", error);
+        //     }
+        // };
+
+
+
         const fetchProfesseur = async () => {
+            const token = sessionStorage.getItem("token");
+            await axiosClient.get("/sanctum/csrf-cookie");
             try {
-                const response = await axiosClient.get(`/api/professeur/${id}`);
-                setFormData(response.data);
+                const response = await axiosClient.get(`/api/professeurs/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                console.log(response.data);
+                setFormData(response.data.professeur);
             } catch (error) {
                 console.error("There was an error fetching the professor data!", error);
             }
@@ -41,7 +63,7 @@ function EditProfesseur() {
         const token = sessionStorage.getItem("token");
         await axiosClient.get("/sanctum/csrf-cookie"); // For CSRF token
         try {
-            await axiosClient.put(`/api/professeur/${id}`, formData, {
+            await axiosClient.put(`/api/professeurs/${id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

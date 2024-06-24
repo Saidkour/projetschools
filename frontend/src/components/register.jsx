@@ -3,33 +3,36 @@ import { useForm } from "react-hook-form";
 import axiosClient from "../api/axios";
 import { useNavigate } from "react-router";
 
-export default function Login() {
+export default function Register() {
     const {
         register,
         handleSubmit,
         setError,
         formState: { isSubmitting, errors },
     } = useForm();
+
     const navigate = useNavigate();
     useEffect(() => {
         if (sessionStorage.getItem("token")) {
             navigate("/");
         }
     });
+
     const onSubmit = async (values) => {
         try {
             // Login request
+            console.log({
+                name: values.name,
+                email: values.email,
+                password: values.password,
+            })
             await axiosClient.get("/sanctum/csrf-cookie");
-            const response = await axiosClient.post("/api/login", {
+            const response = await axiosClient.post("/registerr",{
+                name: values.name,
                 email: values.email,
                 password: values.password,
             });
-
-            const token = response.data.access_token;
-
-            sessionStorage.setItem("token", token);
-
-            navigate("/admin/dashboard");
+            navigate("/login");
         } catch (res) {
             console.log(res);
             if (res.response.data.message) {
@@ -42,11 +45,10 @@ export default function Login() {
 
     return (
         <div className="relative">
-          <div className='absolute top-0 left-0 w-full h-full bg-[url("public/login4.jpg")] opacity-[0.87]  bg-cover bg-center z-[-1]'></div>
-          <div className="absolute bg-white w-full h-full left-0 right-0 bottom-0 opacity-[0.47] bg-cover z-[-1] bg-center top-0"></div>
-            <div className="min-h-screen bg-transparent  flex flex-col justify-center py-12 px-6 lg:px-8">
-                <div className="mt-8 relative sm:mx-auto sm:w-full sm:max-w-lg shadow-lg">
-                <div className="absolute z-[-1] bg-semi-white w-full h-full left-0 right-0 bottom-0  opacity-60 top-0"></div>
+            <div className='absolute top-0 left-0 w-full h-full bg-[url("public/login4.jpg")] opacity-[0.87]  bg-cover bg-center z-[-1]'></div>
+            <div className="absolute bg-white w-full h-full left-0 right-0 bottom-0 opacity-[0.47] bg-cover z-[-1] bg-center top-0"></div>
+            <div className="min-h-screen flex flex-col justify-center py-12 px-6 lg:px-8">
+                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                         <div className="mb-8 sm:mx-auto sm:w-full sm:max-w-md">
                             <img
@@ -54,20 +56,44 @@ export default function Login() {
                                 src="https://st2.depositphotos.com/47577860/49694/v/1600/depositphotos_496949402-stock-illustration-business-communication-employee-icon-outline.jpg" // Example image URL
                                 alt="Workflow"
                             />
-                            <h6 className="text-center mt-1 text-xl font-semi-bold text-gray-900">
-                                Sign up your account
+                            <h6 className="text-center text-xl font-extrabold text-gray-900">
+                                Sign in your account
                             </h6>
                         </div>
                         <form
                             className="mb-0 space-y-6"
                             onSubmit={handleSubmit(onSubmit)}
                         >
-                            <div>
-                                {errors.alert && (
+                            {errors.alert && (
                                     <p className="mt-1 mb-2 p-4 text-center bg-red-200 rounded-md text-red-600 text-sm">
                                         {errors.alert.message}
                                     </p>
                                 )}
+                                 <div>
+                                <label
+                                    htmlFor="name"
+                                    className="flex text-sm font-medium text-gray-700"
+                                >
+                                    Username
+                                </label>
+                                <div className="mt-1">
+                                    <input
+                                        name="name"
+                                        type="text"
+                                        placeholder="name"
+                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm"
+                                        {...register("name", {
+                                            required: "username is required",
+                                        })}
+                                    />
+                                    {errors.name && (
+                                        <p className="mt-1 text-red-600 text-sm">
+                                            {errors.name.message}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                            <div>
                                 <label
                                     htmlFor="email"
                                     className="flex text-sm font-medium text-gray-700"
@@ -78,7 +104,7 @@ export default function Login() {
                                     <input
                                         name="email"
                                         type="email"
-                                        placeholder="Email@example.com"
+                                        placeholder="email@example.com"
                                         className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm"
                                         {...register("email", {
                                             required: "Email is required",
@@ -152,17 +178,17 @@ export default function Login() {
                                             <path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z" />
                                         </svg>
                                     ) : (
-                                        "login"
+                                        "register"
                                     )}{" "}
                                 </button>
                             </div>
                             <p className="mt-2 text-center text-sm text-blue-500 max-w">
-                                Don't have an account?
+                                Already registered?
                                 <a
-                                    href="/register"
-                                    className="font-medium ml-2 font-semi-bold text-gray-600 hover:text-gray-800"
+                                    href="/login"
+                                    className="font-medium ml-2 text-gray-600 hover:text-gray-500"
                                 >
-                                    sign in
+                                    login
                                 </a>
                             </p>
                         </form>

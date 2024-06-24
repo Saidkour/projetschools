@@ -33,6 +33,15 @@ class StudentController extends Controller
             'student' => $student
         ], 201);
     }
+    public function show ($id) {
+        $student = Student::find($id);
+    
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 404);
+        }
+    
+        return response()->json(['student' => $student]);
+    }
 
     public function update(Request $request, $id) {
         $student = Student::find($id);

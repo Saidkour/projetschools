@@ -6,24 +6,19 @@ const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const [url, setUrl] = useState(location.pathname);
-  const [isTrensparent, setIsTransparent] = useState(false);
-  useEffect(() => {
-    setUrl(location.pathname);
-    if (url == "/") {
-      setIsTransparent(true);
-    } else {
-      setIsTransparent(false);
-    }
-  }, [location, url]);
+//   const [isTrensparent, setIsTransparent] = useState(true);
+//   useEffect(() => {
+//     setUrl(location.pathname);
+//     if (url == "/") {
+//       setIsTransparent(true);
+//     } else {
+//       setIsTransparent(false);
+//     }
+//   }, [location, url]);
   return (
     <>
       <nav
-        className={`py-5 px-10 shadow-lg  ${isTrensparent
-          ? menuOpen
-            ? "bg-semi-black relative  z-[999] top-0 left-0 w-full"
-            : "bg-transparent absolute z-[999] top-0 left-0 w-full"
-          : "bg-white "
-          }`}
+        className={`py-5 px-10 shadow-lg  bg-transparent absolute z-[999] top-0 left-0 w-full`}
       >
         <div className="container  mx-auto flex max-w-[1440px] flex-col md:flex-row justify-start relative md:justify-between ">
           <Link to={"/"} className="text-black w-fit font-bold flex ">
