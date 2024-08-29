@@ -1,5 +1,15 @@
+import HomeHeader from "./home/HomeHeader";
+import WorkingTimes from "./home/WorkingTimes";
+import Footer from "./home/footer";
+
 function Home() {
-    return <div> welcome Home</div>;
+    return(
+        <>
+        <HomeHeader />
+        <WorkingTimes/>
+        <Footer/>
+        </>
+    )
 }
 
 export default Home;
